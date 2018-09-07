@@ -11,18 +11,10 @@ exports.arraysAnswers = {
   },
 
   sum: function (arr) {
-    // let sum = 0;
-    // for (let i = 0; i < arr.length; i++) {
-    //   sum += arr[i];
-    // }
     return arr.reduce((x, y) => x + y);
   },
 
   remove: function (arr, item) {
-    // let newArr = [];
-    // for (let i = 0; i < arr.length; i++) {
-    //   if (arr[i] !== item) newArr.push(arr[i])
-    // }
     return arr.filter((x) => x !== item);
   },
 
@@ -65,11 +57,10 @@ exports.arraysAnswers = {
   },
 
   count: function (arr, item) {
-    let occurence = 0;
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === item) occurence++;
-    }
-    return occurence;
+    return arr.reduce((occurence, cur) => {
+      if (item === cur) occurence++;
+      return occurence;
+    }, 0);
   },
 
   duplicates: function (arr) {
@@ -86,9 +77,9 @@ exports.arraysAnswers = {
   },
 
   findAllOccurrences: function (arr, target) {
-    let occurences = [];
-    arr.forEach((item, i) => item === target && occurences.push(i));
-
-    return occurences;
+    return arr.reduce((acc, cur, i) => {
+      if (target === cur) acc.push(i);
+      return acc;
+    }, []);
   }
 };
