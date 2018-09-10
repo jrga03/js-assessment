@@ -6,8 +6,12 @@ exports.asyncAnswers = {
   },
 
   manipulateRemoteData: async function (url) {
-    const names = [];
-    await fetch(url).then(res => res.json()).then(data => data.people.forEach(obj => names.push(obj.name)));
-    return names.sort();
+    const response = await fetch(url);
+    const json = await response.json();
+
+    return json.people.reduce((acc, cur) => {
+      acc.push(cur.name)
+      return acc;
+    }, []).sort();
   }
 };
