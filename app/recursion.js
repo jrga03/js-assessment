@@ -64,34 +64,24 @@ exports.recursionAnswers = {
   },
 
   validParentheses: function (n) {
-    const unique = [];
-    this.permute(("()".repeat(n)).split(""))
-      .filter((permutation) => isValid(permutation))
-      .forEach((x) => unique.includes(x.join("")) || unique.push(x.join("")));
-  
-    function isValid(arr) {
-      let isValid = true;
-      let stack = [];
-      for (let i=0; i<arr.length; i++) {
-        if (arr[i] === "(") {
-          stack.push(arr[i]);
-        } else if (stack.length > 0) {
-          stack.pop();
-        } else {
-          isValid = false;
-          break;
+    const combinations = [];
+
+    function buildCombination(str, open, close) {
+      if (open === 0 && close === 0) {
+        combinations.push(str)
+      } else {
+        if (open > 0) {
+          buildCombination(str+"(", open-1, close+1);
+        }
+        if (close > 0) {
+          buildCombination(str+")", open, close-1);
         }
       }
-
-      if (stack.length > 0) {
-        isValid = false;
-      }
-      return isValid;
     }
 
-    return unique;
-
-    // var expected = [ '((()))', '(()())', '(())()', '()(())', '()()()'];
-    // var result = recursionAnswers.validParentheses(3);
+    buildCombination("", n, 0);
+    console.log(combinations);
+    
+    return combinations;
   }
 };
